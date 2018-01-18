@@ -1,0 +1,30 @@
+{
+  "name": "dbplayground-mock-api-server-be",
+  "version": "1.0.0",
+  "description": "Content server and app for Mock API Server project of dbplayground.com",
+  "main": "index.js",
+  "scripts": {
+    "build-test": "cross-env NODE_ENV=test gulp",
+    "build": "cross-env NODE_ENV=production gulp",
+    "preview": "cross-env NODE_ENV=dev HTTP_PORT=23001 node src/app.js",
+    "start-test": "cross-env NODE_ENV=test HTTP_PORT=25001 node app.js",
+    "start": "cross-env NODE_ENV=production HTTP_PORT=25001 node app.js",
+    "test": "jest"
+  },
+  "author": "DropBearDan (dan.ess.001@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cross-env": "^5.1.1",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
+    "moment": "^2.20.0",
+    "mongoose": "^4.13.7"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-install": "^1.1.0",
+    "gutil": "^1.6.4",
+    "jest": "^21.2.1"
+  }
+}

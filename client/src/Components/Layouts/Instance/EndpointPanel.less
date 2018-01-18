@@ -1,0 +1,99 @@
+@import (once) '../../../Assets/less/animation.less';
+@import (once) '../../../Assets/less/flex.less';
+@import (once) '../../../Assets/less/transition.less';
+
+.EndpointPanel {
+    .display-flex();
+    .flex-direction(column);
+
+    padding: 1em;
+
+    border: 1px solid rgba(0, 0, 0, 0.1);    
+
+    box-shadow: none;
+
+    width: 100%;
+
+    .transition(~'box-shadow 0.15s');
+
+    &.active {
+        border: 2px solid rgb(255, 0, 98);
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:hover:not(.active) {
+        box-shadow: 0 0 5px rgb(0, 50, 145);
+    }
+
+    & > * {
+        .display-flex();
+
+        width: 100%;
+
+        margin: 0.25em 0;
+    }
+
+    .method {
+        padding: 0.5em 0.5em 0.5em 1em;
+
+        border: 1px solid;
+        border-radius: 10px 0 0 10px;
+        
+        font-weight: 600;
+
+        &.blue {
+            border-color: rgb(0, 195, 255);
+            background: rgb(0, 195, 255);
+        }
+
+        &.green {
+            border-color: rgb(0, 255, 0);
+            background: rgb(0, 255, 0);
+        }
+
+        &.purple {
+            border-color: rgb(195, 0, 255);
+            background: rgb(195, 0, 255);
+        }
+
+        &.red {
+            border-color: rgb(255, 0, 0);
+            background: rgb(255, 0, 0);
+        }
+
+        &.yellow {
+            border-color: rgb(255, 238, 0);
+            background: rgb(255, 238, 0);
+        }
+    }
+
+    .invocation {
+        .flex(1);
+
+        .display-flex();
+        .align-items(center);
+
+        padding: 0.5em;
+
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 0 10px 10px 0;
+        border-left: none;
+
+        & > *:first-child {
+            .flex(1);
+        }
+    }
+
+    .field {
+        width: 25%;
+
+        font-weight: 600;
+    }
+
+    .value {
+        .flex(1);
+    }
+}

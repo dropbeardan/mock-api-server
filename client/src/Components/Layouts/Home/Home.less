@@ -1,0 +1,96 @@
+@import (once) '../../../Assets/less/flex.less';
+
+.Home {
+    .display-flex();
+    .justify-content(center);
+    .align-items(center);
+    .flex-wrap(wrap);
+
+    min-height: 100vh;
+    width: 100vw;
+
+    background: url('/resources/background.jpg');
+    background-position: center;
+    background-size: cover;
+
+    & > * {
+        .display-flex();
+        .flex-direction(column);
+        .justify-content(center);
+        .align-items(center);
+    }
+}
+
+.Home .description {
+    .display-flex();
+    .flex-direction(column);
+    .justify-content(center);
+
+    padding: 2em;
+
+    border-radius: 10px;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    color: white;
+
+    & > header {
+        font-weight: 600;
+    }
+
+    & > main {
+        li {
+            margin-bottom: 0.5em;
+
+            & > * {
+                margin-left: 1em;
+
+                text-align: left;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .Home {
+        & > *:first-child {
+            padding: 2em;
+        }
+    }
+
+    .Home .description {
+        text-align: center;
+
+        & > header {
+            font-size: 2.5em;
+        }
+
+        & > main {
+            font-size: 1em;
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 700px) {
+    .Home .description {
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 400px) {
+    .Home {
+        & > * {
+            padding: 2em;
+        }
+    }
+    
+    .Home .description {
+        & > header {
+            font-size: 4em;
+        }
+
+        & > main {
+            font-size: 1.25em;
+        }
+    }
+}

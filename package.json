@@ -1,0 +1,21 @@
+{
+  "name": "dbplayground-mock-api-server",
+  "version": "1.0.0",
+  "description": "A lightweight server that simulates a server response through a real-time network",
+  "main": "index.js",
+  "scripts": {
+    "global-build-test": "npm run build-test --prefix client && npm run build-test --prefix server",
+    "global-build": "npm run build --prefix client && npm run build --prefix server",
+    "start-test": "npm run start-test --prefix build/test/server",
+    "start": "npm run start --prefix build/production/server",
+    "ssh": "ssh -i '../auth/aws/dbplayground.pem' ubuntu@ec2-52-65-99-228.ap-southeast-2.compute.amazonaws.com"
+  },
+  "author": "Drop Bear Dan (dan.ess.001@gmail.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rsync": "0.0.8",
+    "gutil": "^1.6.4"
+  },
+  "dependencies": {}
+}

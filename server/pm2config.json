@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "Mock-API-Server",
+      "script": "./app.js",
+      "watch": true,
+      "env": {
+        "NODE_ENV": "production",
+        "HTTP_PORT": 25001
+      }
+    }
+  ]
+}

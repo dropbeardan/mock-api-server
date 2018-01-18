@@ -1,0 +1,45 @@
+@import (once) '../../Assets/less/animation.less';
+@import (once) '../../Assets/less/flex.less';
+@import (once) '../../Assets/less/transform.less';
+@import (once) '../../Assets/less/transition.less';
+
+.Loading {
+    .display-flex();
+    .flex-direction(column);
+    .justify-content(center);
+    .align-items(center);
+
+    height: 100%;
+    width: 100%;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    color: white;
+
+    .transition(opacity 0.3s);
+    opacity: 1;
+
+    &.hidden {
+        visibility: hidden;
+        opacity: 0;
+    }
+}
+
+.Loading .spin-icon {
+    .keyframes(spin, {
+        from { .transform(rotate(0deg)); }
+        to { .transform(rotate(360deg)); }
+    });
+
+    .animation(spin 3s linear infinite);
+
+    i {
+        .transform(rotateY(180deg));
+
+        font-size: 5em;
+    }
+}
+
+.Loading > header {
+    font-size: 2em;
+}

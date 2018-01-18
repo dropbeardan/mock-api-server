@@ -1,0 +1,209 @@
+@import (once) '../../../Assets/less/flex.less';
+@import (once) '../../../Assets/less/transition.less';
+
+.Instance {
+    position: relative;
+
+    height: 100vh;
+    width: 100vw;
+
+    background: url('/resources/background.jpg');
+    background-position: center;
+    background-size: cover;
+
+    & > * {
+        position: absolute;
+
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.Instance .content {
+    .display-flex();
+    .flex-direction(column);
+
+    & > *:first-child {
+        margin-bottom: 0.5em;
+    }
+
+    & > *:not(:first-child):not(:last-child) {
+        margin: 0.5em 0;
+    }
+
+    & > *:last-child {
+        margin-top: 0.5em;
+    }
+}
+
+.Instance .content .banner {
+    .display-flex();
+    .flex-direction(row-reverse);
+    .justify-content(space-between);
+    .flex-wrap(wrap);
+
+    & > * {
+        margin: 1em;
+    }
+
+    & > header {
+        color: white;
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+
+    .menu {
+        .flex(1);
+
+        .display-flex();
+        .justify-content(flex-end);
+        .flex-wrap(wrap);
+
+        input {
+            margin: 0;
+            padding: 0.25em 1em;
+
+            border-radius: 10px;
+
+            font-size: 1em;
+            font-weight: 600;
+
+            .transition(~'background 0.1s, color 0.1s');
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        #logoutButton {
+            outline: none;
+            border: solid 2px rgb(200, 0, 125);
+            background: white;
+            color: rgb(200, 0, 125);
+
+            &:hover {
+                background: rgb(200, 0, 125);
+                color: white;
+            }
+        }
+    }
+}
+
+.Instance .content .activeEndpoints {
+    .flex(1);
+
+    .display-flex();
+
+    width: 100%;
+
+    overflow-x: hidden;
+
+    & > * {
+        .flex(1);
+
+        .display-flex();
+        .flex-direction(column);
+
+        padding: 1em;
+
+        height: 100%;
+
+        & > .title {
+            .display-flex();
+            .justify-content(space-between);
+            .align-items(flex-end);
+
+            margin-bottom: 10px;
+        }
+    }
+
+    .panels {
+        & > *:first-child {
+            .display-flex();
+
+            & > header {
+                .flex(1);
+
+                color: white;
+                font-size: 1.5em;
+                font-weight: 600;                
+            }
+
+            .wrapper {
+                .display-flex();
+                
+                & > * {
+                    margin: 0 0.25em;
+                }
+            }
+        }
+
+        & > main {
+            .flex(1);
+
+            padding: 1em;
+
+            background: white;
+
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+
+            overflow: auto;
+
+            & > * {
+                margin: 1em 0;
+            }
+        }
+    }
+
+    .details {
+        & > header {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        & > main {
+            .flex(1);
+
+            background: white;
+
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+
+            overflow-x: hidden;
+        }
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .Instance .content .activeEndpoints {
+        position: relative;
+
+        width: 100%;
+
+        & > * {
+            position: absolute;
+
+            width: 100%;
+
+            .transition(~'left 0.5s');
+        }
+
+        & > *:first-child {
+            left: -100%;
+
+            &.active {
+                left: 0;
+            }
+        }
+
+        & > *:last-child {
+            left: 100%;
+
+            &.active {
+                left: 0;
+            }
+        }
+    }
+}

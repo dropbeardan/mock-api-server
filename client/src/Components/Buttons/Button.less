@@ -1,0 +1,119 @@
+@import (once) '../../Assets/less/flex.less';
+@import (once) '../../Assets/less/transition.less';
+
+.Button(@height, @width) {
+    position: relative;
+
+    height: @height;
+    width: @width;
+
+    & > * {
+        position: absolute;
+    }
+}
+
+.ButtonProps() {
+    .display-flex();
+    .justify-content(center);
+    .align-items(center);
+
+    height: 100%;
+    width: 100%;
+
+    font-size: 1.5em;
+    line-height: 1;
+
+    color:rgba(0, 0, 0, 0.1);
+
+    &:not(.disabled) {
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:hover + .hint {
+            z-index: 99;
+            
+            opacity: 1;
+
+            .transition(~'opacity 0.4s');
+        }
+    }
+}
+
+.FillButtonProps(@color) {
+    .ButtonProps();
+
+    border: solid 2px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    
+    background: rgba(0, 0, 0, 0.1);
+
+    &:not(.disabled) {
+        border-color: @color;
+        
+        background: white;
+        
+        color: @color;
+
+        .transition(~'background 0.1s, color 0.1s');
+
+        &:hover {            
+            background: @color;
+            color:white;
+        }
+    }
+}
+
+.HoverButtonProps(@color) {
+    .ButtonProps();
+
+    &:not(.disabled) {
+        color: @color;
+        opacity: 0.25;
+
+        .transition(~'opacity 0.5s');
+
+        &:hover {            
+            opacity: 1;
+        }
+    }
+}
+
+.ButtonHintProps(@btnHeight, @btnWidth, @width) {
+    z-index: -1;
+
+    top: calc(@btnHeight + 10);
+    left: calc(-1 * ((@width - @btnWidth) / 2));
+
+    padding: 0.5em;
+
+    width: @width;
+
+    border: solid 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    
+    background: white;
+
+    text-align: center;
+    word-wrap: break-word;
+
+    opacity: 0;
+
+    .transition(~'opacity 0.4s');
+
+    &.hidden {
+        display: none;
+    }
+
+    &.left {
+        left: calc(-1 * (@width - @btnWidth));
+    }
+
+    &.center {
+        left: calc(-1 * ((@width - @btnWidth) / 2));
+    }
+
+    &.right {
+        left: 0;
+    }
+}
