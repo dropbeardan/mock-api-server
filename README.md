@@ -373,7 +373,7 @@ Invoking or calling an endpoint is the process of sending a request to a URL ass
 
 The structure of the invocation URL for an endpoint is as follows:
 
-> URL: https://apiserver.dbplayground.com/instance/routeName
+> URL: https://apiserver.dbplayground.com/:instance/:route
 > HTTP Method: routeMethod
 
 Example:
@@ -431,13 +431,13 @@ Not Found | 404 | {<br />"message": "Not Found."<br />} | The instance name spec
 
 ### Invoking Endpoints
 
-Performing a request to the https://apiserver.dbplayground.com/instance/routeName with its corresponding HTTP method will process and return the response stored for its corresponding endpoint.
+Performing a request to the https://apiserver.dbplayground.com/:instance/:route with its corresponding HTTP method will process and return the response stored for its corresponding endpoint.
 
 #### Request:
 
 URL | Method | Function
 --- | --- | ---
-https://apiserver.dbplayground.com/:instance/:routeName | GET | Retrieves a list of invocable endpoints and their details.
+https://apiserver.dbplayground.com/:instance/:route | VARIABLE | Activates and returns the endpoints.
 
 Method:
 
@@ -445,25 +445,15 @@ Format: A RESTful HTTP method (GET, POST, PUT, PATCH, DELETE).
 
 Params:
 
-Format: JSON
-
 Property | Type | Function
 --- | --- | ---
 instance | string | The instance name of a valid API instance.
-routeName | string | The route associated with the endpoint belonging to the specified API instance.
+route | string | The route associated with the endpoint belonging to the specified API instance.
 
 #### Response:
 
 Format: JSON
 
-Element | Type | Function
---- | --- | ---
-headers | object | An object of headers to be returned when the endpoint is invoked.
-statusCode | number | A numeric status code associated with the HTTP response (100 - 599). Response uses 200 if not specified.
-response | any | The response to be returned when the endpoint is invoked.
-
-
 Result | Status Code | Example | Reason
 --- | --- | --- | ---
-Success | 200 (or as specified) | { 'dog': 'woof' } | List of endpoint details returned.
 Not Found | 404 | {<br />"message": "Not Found."<br />} | The combination of instance name, route name and route method is not associated with a valid endpoint.
