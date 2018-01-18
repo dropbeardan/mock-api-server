@@ -47,20 +47,20 @@ To create an instance, supply a valid instance name and Password into the body o
 
 URL | Method | Function
 --- | --- | ---
-https://apiserver.dbplayground.com**/instances** | POST | Creates a new Instance.
+https://apiserver.dbplayground.com/instances | POST | Creates a new Instance.
 
-**Body**:
+Body:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
-instance | string | Instance name. Will be used as the base route for invoking the endpoints. <br /> Avoid using symbols/spaces as most of them will be sanitised.  <br /><br /> Example: <br /> An instance is created with the name **Tom** with the endpoints **/cat** and **/dog** <br /> Calling https://apiserver.dbplayground.com**/Tom/cat** will process and return the response associated with **Tom**'s **/cat** endpoint.
+instance | string | Instance name. Will be used as the base route for invoking the endpoints. <br /> Avoid using symbols/spaces as most of them will be sanitised.  <br /><br /> Example: <br /> An instance is created with the name Tom with the endpoints /cat and /dog <br /> Calling https://apiserver.dbplayground.com/Tom/cat will process and return the response associated with Tom's /cat endpoint.
 password | string | Instance password.
 
 #### Response:
 
-**Format**: JSON
+Format: JSON
 
 Element | Type | Function
 --- | --- | ---
@@ -70,14 +70,14 @@ token | string | A JSON Web Token (https://jwt.io/) that will need to be passed 
 Result | Status Code | Example | Reason
 --- | --- | --- | ---
 Success | 200 | {<br />"token": "eyJhbG..."<br />} | New instance successfully created.
-Insufficient Details Provided | 400 | {<br />"message": "Insufficient Details Provided."<br />} | Unable to read the **instance** and/or **password** from the request body.
-instance name Not Available | 400 | {<br />"message": "instance name is not available."<br />} | An instance currently exists for the supplied **instance**.
+Insufficient Details Provided | 400 | {<br />"message": "Insufficient Details Provided."<br />} | Unable to read the instance and/or password from the request body.
+instance name Not Available | 400 | {<br />"message": "instance name is not available."<br />} | An instance currently exists for the supplied instance.
 
 
 ## Authentication
 In order to manage the endpoints for an instance, the User must authenticate with the server.
 
-A successful authentication will supply the user with an access token which will be required in the Authorization header of all requests to access a protected route (e.g. **/endpoints**).
+A successful authentication will supply the user with an access token which will be required in the Authorization header of all requests to access a protected route (e.g. /endpoints).
 
 An access token serves to identify the instance to manage in addition to verifying that the User has privileges to manage the instance.
 
@@ -93,11 +93,11 @@ To create an instance, supply a valid instance name and Password into the body o
 
 URL | Method | Function
 --- | --- | ---
-https://apiserver.dbplayground.com**/sessions** | POST | Authenticates User.
+https://apiserver.dbplayground.com/sessions | POST | Authenticates User.
 
-**Body**:
+Body:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
@@ -106,7 +106,7 @@ password | string | Instance password.
 
 #### Response:
 
-**Format**: JSON
+Format: JSON
 
 Element | Type | Function
 --- | --- | ---
@@ -116,8 +116,8 @@ token | string | A JSON Web Token (https://jwt.io/) that will need to be passed 
 Result | Status Code | Example | Reason
 --- | --- | --- | ---
 Success | 200 | {<br />"token": "eyJhbG..."<br />} | Access token granted.
-Insufficient Details Provided | 400 | {<br />"message": "Insufficient Details Provided."<br />} | Unable to read the **instance** and/or **password** from the request body.
-Invalid Credentials | 403 | {<br />"message": "Invalid credentials provided."<br />} | The **instance** and/or **password** associated with an active instance is invalid.
+Insufficient Details Provided | 400 | {<br />"message": "Insufficient Details Provided."<br />} | Unable to read the instance and/or password from the request body.
+Invalid Credentials | 403 | {<br />"message": "Invalid credentials provided."<br />} | The instance and/or password associated with an active instance is invalid.
 
 
 ## Endpoints
@@ -127,26 +127,26 @@ As endpoints represent the management section of an instance, Users will need to
 
 ### Viewing Endpoints
 
-Performing a GET request to the **endpoints/** route will details all of the active endpoint(s) associated with an instance.
+Performing a GET request to the endpoints/ route will details all of the active endpoint(s) associated with an instance.
 
 #### Request:
 
 URL | Method | Function
 --- | --- | ---
-https://apiserver.dbplayground.com**/endpoints** | GET | Retrieves a list of active endpoints and their details.
-https://apiserver.dbplayground.com**/endpoints/:endpointId** | GET | Retrieves the details of a specific active endpoint for the instance.
+https://apiserver.dbplayground.com/endpoints | GET | Retrieves a list of active endpoints and their details.
+https://apiserver.dbplayground.com/endpoints/:endpointId | GET | Retrieves the details of a specific active endpoint for the instance.
 
-**Params**:
+Params:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
 endpointId (optional) | string | The ID of a valid endpoint for the instance.
 
-**Headers**:
+Headers:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
@@ -155,7 +155,7 @@ Authorization | string | Valid access token.
 
 #### Response:
 
-**Format**: JSON
+Format: JSON
 
 Element | Type | Function
 --- | --- | ---
@@ -176,51 +176,51 @@ Unauthorized | 401 | {<br />"message": "Unauthorized."<br />} | A valid instance
 
 ### Creating Endpoints
 
-To create an endpoint, send a POST request to the **endpoints/** route with the route name, HTTP method and at least one response property.
+To create an endpoint, send a POST request to the endpoints/ route with the route name, HTTP method and at least one response property.
 
 An endpoint signifies a combination of route name and HTTP method.
 
 Different HTTP methods for the same route name will require individual endpoints.
 
-**Example:**
+Example:
 
-Instance with instance name **Tom** has the following endpoints:
+Instance with instance name Tom has the following endpoints:
 
 1. 
-    * route: **dog**
-    * method: **GET**
-    * response: **'hello'**
+    * route: dog
+    * method: GET
+    * response: 'hello'
 2. 
-    * route: **dog**
-    * method: **POST**
-    * statusCode: **401**
-    * response: **{ "mission": "failed" }**
+    * route: dog
+    * method: POST
+    * statusCode: 401
+    * response: { "mission": "failed" }
 
-Calling HTTP GET to https://apiserver.dbplayground.com**/Tom/dog** will return:
-* statusCode: **200**
-* data: **'hello'**
+Calling HTTP GET to https://apiserver.dbplayground.com/Tom/dog will return:
+* statusCode: 200
+* data: 'hello'
 
-Calling HTTP POST to https://apiserver.dbplayground.com**/Tom/dog** will return:
-* statusCode: **401**
-* data: **{ "mission": "failed" }**
+Calling HTTP POST to https://apiserver.dbplayground.com/Tom/dog will return:
+* statusCode: 401
+* data: { "mission": "failed" }
 
 #### Request:
 
 URL | Method | Function
 --- | --- | ---
-https://apiserver.dbplayground.com**/endpoints** | POST | Creates a new endpoint for the specified route name and HTTP method.
+https://apiserver.dbplayground.com/endpoints | POST | Creates a new endpoint for the specified route name and HTTP method.
 
-**Headers**:
+Headers:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
 Authorization | string | Valid access token.
 
-**Body**:
+Body:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
@@ -233,7 +233,7 @@ delay (optional) | number | A timeout (milliseconds) that will be passed between
 
 #### Response:
 
-**Format**: JSON
+Format: JSON
 
 Element | Type | Function
 --- | --- | ---
@@ -250,13 +250,13 @@ Result | Status Code | Example | Reason
 --- | --- | --- | ---
 Success | 200 | {<br />"route": "dog"<br />"method": "GET"<br />"headers": null<br />"statusCode": "dog"<br />"response": { "status": "ok" }<br />} | Endpoint successfully created.
 Success | 200 |  | Endpoint successfully created, however no endpoint details are available to be returned.
-Insufficient Details | 400 | {<br />"message": "Insufficient details provided."<br />} | Unable to read the **route** and/or **method** from the request body.
+Insufficient Details | 400 | {<br />"message": "Insufficient details provided."<br />} | Unable to read the route and/or method from the request body.
 Invalid Field Supplied | 400 | {<br />"message": "Invalid method supplied."<br />} | Supplied value(s) do not meet the data type or value requirement(s).
 Unauthorized | 401 | {<br />"message": "Unauthorized."<br />} | A valid instance associated with the access token cannot be found or no/an invalid access token has been supplied in the Authorization header.
 
 ### Updating Endpoints
 
-To update an endpoint, send a PATCH request to the **endpoints/** route with a valid endpoint ID specified as a parameter.
+To update an endpoint, send a PATCH request to the endpoints/ route with a valid endpoint ID specified as a parameter.
 
 The endpoint route name and method cannot be altered after it has been created. Should you wish to change these properties, delete the endpoint and recreate it with the new details.
 
@@ -264,27 +264,27 @@ The endpoint route name and method cannot be altered after it has been created. 
 
 URL | Method | Function
 --- | --- | ---
-https://apiserver.dbplayground.com**/endpoints/:endpointId** | PATCH | Updates an existing endpoint matching the specified endpoint ID.
+https://apiserver.dbplayground.com/endpoints/:endpointId | PATCH | Updates an existing endpoint matching the specified endpoint ID.
 
-**Params**:
+Params:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
 endpointId | string | The ID of a valid endpoint for the instance.
 
-**Headers**:
+Headers:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
 Authorization | string | Valid access token.
 
-**Body**:
+Body:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
@@ -295,7 +295,7 @@ delay (optional) | number | A timeout (milliseconds) that will be passed between
 
 #### Response:
 
-**Format**: JSON
+Format: JSON
 
 Element | Type | Function
 --- | --- | ---
@@ -312,13 +312,13 @@ Result | Status Code | Example | Reason
 --- | --- | --- | ---
 Success | 200 | {<br />"route": "dog"<br />"method": "GET"<br />"headers": null<br />"statusCode": "dog"<br />"response": { "status": "ok" }<br />} | Endpoint successfully created.
 Success | 200 |  | Endpoint successfully created, however no endpoint details are available to be returned.
-Insufficient Details | 400 | {<br />"message": "Insufficient details provided."<br />} | Unable to read the **route** and/or **method** from the request body.
+Insufficient Details | 400 | {<br />"message": "Insufficient details provided."<br />} | Unable to read the route and/or method from the request body.
 Invalid Field Supplied | 400 | {<br />"message": "Invalid method supplied."<br />} | Supplied value(s) do not meet the data type or value requirement(s).
 Unauthorized | 401 | {<br />"message": "Unauthorized."<br />} | A valid instance associated with the access token cannot be found or no/an invalid access token has been supplied in the Authorization header.
 
 ### Deleting Endpoints
 
-To delete an endpoint, send a DELETE request to the **endpoints/** route with a valid endpoint ID specified as a parameter.
+To delete an endpoint, send a DELETE request to the endpoints/ route with a valid endpoint ID specified as a parameter.
 
 Deleting an endpoint is irreversible.
 
@@ -326,19 +326,19 @@ Deleting an endpoint is irreversible.
 
 URL | Method | Function
 --- | --- | ---
-https://apiserver.dbplayground.com**/endpoints/:endpointId** | DELETE | Deletes an existing endpoint matching the specified endpoint ID.
+https://apiserver.dbplayground.com/endpoints/:endpointId | DELETE | Deletes an existing endpoint matching the specified endpoint ID.
 
-**Params**:
+Params:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
 endpointId | string | The ID of a valid endpoint for the instance.
 
-**Headers**:
+Headers:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
@@ -348,7 +348,7 @@ Authorization | string | Valid access token.
 
 A list of the remaining endpoints associated with the instance and its details will be returned.
 
-**Format**: JSON
+Format: JSON
 
 Element | Type | Function
 --- | --- | ---
@@ -373,37 +373,37 @@ Invoking or calling an endpoint is the process of sending a request to a URL ass
 
 The structure of the invocation URL for an endpoint is as follows:
 
-> URL: **https://apiserver.dbplayground.com/__instance__/__routeName__**
-> HTTP Method: **__routeMethod__**
+> URL: https://apiserver.dbplayground.com/instance/routeName
+> HTTP Method: routeMethod
 
-**Example**:
+Example:
 
 Consider the following instance and endpoint:
 1. Instance:
-    * **instance name**: Tom
+    * instance name: Tom
 1. Endpoint:
-    * **route**: 'cat'
-    * **method**: 'GET'
-    * **response**: { 'dog': 'woof' }
+    * route: 'cat'
+    * method: 'GET'
+    * response: { 'dog': 'woof' }
 
-Sending a **GET** request to **https://apiserver.dbplayground.com/Tom/cat** will return the following response:
+Sending a GET request to https://apiserver.dbplayground.com/Tom/cat will return the following response:
 
-* **statusCode**: 200
-* **response**: { 'dog': 'woof' }
+* statusCode: 200
+* response: { 'dog': 'woof' }
 
 ### Checking/Viewing Invocation Endpoints
 
-Performing a GET request to the **https://apiserver.dbplayground.com/__instance__/** will return a list of the invocable endpoints for the specified instance.
+Performing a GET request to the https://apiserver.dbplayground.com/instance/ will return a list of the invocable endpoints for the specified instance.
 
 #### Request:
 
 URL | Method | Function
 --- | --- | ---
-https://apiserver.dbplayground.com**/:instance** | GET | Retrieves a list of invocable endpoints and their details.
+https://apiserver.dbplayground.com/:instance | GET | Retrieves a list of invocable endpoints and their details.
 
-**Params**:
+Params:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
@@ -411,7 +411,7 @@ instance | string | The instance name of a valid API instance.
 
 #### Response:
 
-**Format**: JSON
+Format: JSON
 
 Element | Type | Function
 --- | --- | ---
@@ -431,21 +431,21 @@ Not Found | 404 | {<br />"message": "Not Found."<br />} | The instance name spec
 
 ### Invoking Endpoints
 
-Performing a request to the **https://apiserver.dbplayground.com/__instance__/__routeName__** with its corresponding HTTP method will process and return the response stored for its corresponding endpoint.
+Performing a request to the https://apiserver.dbplayground.com/instance/routeName with its corresponding HTTP method will process and return the response stored for its corresponding endpoint.
 
 #### Request:
 
 URL | Method | Function
 --- | --- | ---
-https://apiserver.dbplayground.com**/:instance/:routeName** | GET | Retrieves a list of invocable endpoints and their details.
+https://apiserver.dbplayground.com/:instance/:routeName | GET | Retrieves a list of invocable endpoints and their details.
 
-**Method**:
+Method:
 
-**Format**: A RESTful HTTP method (GET, POST, PUT, PATCH, DELETE).
+Format: A RESTful HTTP method (GET, POST, PUT, PATCH, DELETE).
 
-**Params**:
+Params:
 
-**Format**: JSON
+Format: JSON
 
 Property | Type | Function
 --- | --- | ---
@@ -454,7 +454,7 @@ routeName | string | The route associated with the endpoint belonging to the spe
 
 #### Response:
 
-**Format**: JSON
+Format: JSON
 
 Element | Type | Function
 --- | --- | ---
