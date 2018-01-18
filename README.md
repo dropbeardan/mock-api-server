@@ -187,11 +187,11 @@ Example:
 Instance with instance name Tom has the following endpoints:
 
 1. 
-    * route: dog
+    * route: /dog
     * method: GET
     * response: 'hello'
 2. 
-    * route: dog
+    * route: /dog/mission-status
     * method: POST
     * statusCode: 401
     * response: { "mission": "failed" }
@@ -200,7 +200,7 @@ Calling HTTP GET to https://apiserver.dbplayground.com/Tom/dog will return:
 * statusCode: 200
 * data: 'hello'
 
-Calling HTTP POST to https://apiserver.dbplayground.com/Tom/dog will return:
+Calling HTTP POST to https://apiserver.dbplayground.com/Tom/dog/mission-status will return:
 * statusCode: 401
 * data: { "mission": "failed" }
 
@@ -224,7 +224,7 @@ Format: JSON
 
 Property | Type | Function
 --- | --- | ---
-route | string | The route path of the endpoint. This form part of the URL when invoking the endpoint.
+route | string | The route path of the endpoint (can be multi-level, i.e. /a/b/c). This form part of the URL when invoking the endpoint.
 method | string | The HTTP verb associated with the endpoint. <br /> Only RESTful verbs are acceptable (GET, POST, PATCH, PUT, DELETE).
 headers (optional) | object | An object of headers to be returned when the endpoint is invoked.
 statusCode (optional) | number | A numeric status code associated with the HTTP response (100 - 599). Response uses 200 if not specified.
