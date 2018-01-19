@@ -10,8 +10,8 @@ const buildEnv = process.env.NODE_ENV;
 const landingPort = process.env.LANDING_PORT;
 const activePort = process.env.PORT;
 const baseURL = {
-    dev: `http://localhost:${activePort}`,
-    test: `http://localhost:${landingPort}/api/mock-api-server`,
+    dev: `http://localhost:${landingPort}`,
+    test: `http://localhost:${landingPort}`,
     production: `https://apiserver.dbplayground.com`
 };
 
