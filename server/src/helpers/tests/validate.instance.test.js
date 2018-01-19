@@ -2,14 +2,13 @@ const sanitise = require('../sanitise');
 const validate = require('../validate');
 
 const isValid = (instance) => {
-    return validate.instance(sanitise.route(instance));
+    return validate.instance(sanitise.alphaNumeric(instance));
 };
 
 test('Instance cannot be empty, null or undefined.', () => {
     let testCases = [
         '',
         ' ',
-        '/',
         null,
         undefined
     ];
@@ -21,10 +20,10 @@ test('Instance cannot be empty, null or undefined.', () => {
 
 test('Instance should not be a reserved keyword.', () => {
     let testCases = [
-        '/endpoints',
-        '/instances',
-        '/resources',
-        '/sessions'
+        'endpoints',
+        'instances',
+        'resources',
+        'sessions'
     ];
 
     testCases.forEach((testCase) => {

@@ -12,11 +12,10 @@ const mongoId = (id) => {
 const instance = (instance) => {
     const illegalNames = [
         '',
-        '/',
-        '/endpoints',
-        '/instances',
-        '/resources',
-        '/sessions'
+        'endpoints',
+        'instances',
+        'resources',
+        'sessions'
     ];
 
     return instance && !illegalNames.includes(instance);
